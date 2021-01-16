@@ -2,7 +2,7 @@ import axios from "axios";
 
 const cartoonApi = axios.create({
   baseURL: "http://ec2-3-133-137-52.us-east-2.compute.amazonaws.com",
-  withCredentials: false, // refreshToken을 Cookie로 주고받기 위해..
+  // refreshToken을 Cookie로 주고받기 위해..
 });
 
 export const loginApi = {
