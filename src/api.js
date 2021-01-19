@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const cartoonApi = axios.create({
-  baseURL: "https://ec2-3-133-137-52.us-east-2.compute.amazonaws.com",
-  withCredentials: false, // refreshToken을 Cookie로 주고받기 위해..
+  baseURL: "luckycontrol.xyz",
+  // withCredentials: false, // refreshToken을 Cookie로 주고받기 위해..
 });
 
 export const loginApi = {
@@ -41,8 +41,7 @@ export const imageApi = {
     //TODO: 이미지 받기
     return cartoonApi({
       method: "post",
-      url:
-        "https://ec2-3-133-137-52.us-east-2.compute.amazonaws.com/cartoon/transition",
+      url: "luckycontrol.xyz/cartoon/transition",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     });
