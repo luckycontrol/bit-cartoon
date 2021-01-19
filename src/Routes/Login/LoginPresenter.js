@@ -15,33 +15,15 @@ const Login = styled.div`
   width: 100%;
   min-height: 100vh;
 
-  background-color: black;
+  background: #222831;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  div.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
 `;
 
 const LoginContainer = styled.div`
-  min-width: 40vh;
+  min-width: 50vh;
   height: 60vh;
 
   padding: 15px;
@@ -65,7 +47,7 @@ const Title = styled.h1`
 const LoginForm = styled.div`
   width: 100%;
   height: 100%;
-  padding: 15px;
+  padding: 10px 0px;
 
   display: flex;
   flex-direction: column;
@@ -134,8 +116,8 @@ const LoginPresenter = ({
       </Helmet>
       <Login>
         <LoginContainer>
-          <Title>ARTWORKER</Title>
           <LoginForm>
+            <Title>ARTWORKER</Title>
             <LoginInputContainer>
               <LoginInputTitle>아이디</LoginInputTitle>
               <LoginInput
@@ -159,8 +141,6 @@ const LoginPresenter = ({
             <LoginButton onClick={() => _handleLogin()}>로그인</LoginButton>
           </LoginForm>
         </LoginContainer>
-        <video src="mainVideo.mp4" autoPlay muted loop></video>
-        <div className="overlay"></div>
       </Login>
     </>
   );

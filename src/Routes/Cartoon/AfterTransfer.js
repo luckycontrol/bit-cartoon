@@ -45,6 +45,7 @@ const ResultContainer = styled.div`
       padding: 10px;
 
       object-fit: contain;
+      cursor: pointer;
     }
   }
 

@@ -14,33 +14,15 @@ const introAnimation = keyframes`
 const CreateAccount = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: black;
+  background: #222831;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  div.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
 `;
 
 const CreateAccountContainer = styled.div`
-  min-width: 40vh;
+  min-width: 50vh;
   height: 60vh;
 
   padding: 15px;
@@ -69,7 +51,7 @@ const IntroTitle = styled.h1`
 const CreateAccountForm = styled.div`
   width: 100%;
   height: 100%;
-  padding: 15px;
+  padding: 10px 0;
 
   display: flex;
   flex-direction: column;
@@ -164,8 +146,8 @@ const CreateAccountPresenter = ({
       </Helmet>
       <CreateAccount>
         <CreateAccountContainer>
-          <Title>ARTWORKER</Title>
           <CreateAccountForm>
+            <Title>ARTWORKER</Title>
             <IntroTitle>일상을 예술로 만들다.</IntroTitle>
             <CreateAccountIdContainer>
               <CreateAccountInputContainer>
@@ -195,8 +177,6 @@ const CreateAccountPresenter = ({
             </CreateAccountButton>
           </CreateAccountForm>
         </CreateAccountContainer>
-        <video src="mainVideo.mp4" autoPlay loop muted></video>
-        <div className="overlay"></div>
       </CreateAccount>
     </>
   );
