@@ -63,7 +63,7 @@ const LoginInputContainer = styled.div`
 const LoginInput = styled.input`
   width: 100%;
   height: 3vh;
-
+  outline: 0;
   font-size: 18px;
   color: white;
   background-color: transparent;
@@ -96,7 +96,6 @@ const LoginPresenter = ({
   pwdRef,
 }) => {
   const { id, pwd } = account;
-
   return (
     <>
       <Helmet>

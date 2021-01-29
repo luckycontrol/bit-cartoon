@@ -15,15 +15,17 @@
   font-weight: bold;
 }
 
-.filterContainer {
+.filter_container {
   margin-bottom: 10rem;
 }
 
-.filterContainer p {
-  font-size: 2.5rem;
+.filter_title {
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
+
+
 
 .private_gallery_grid {
   display: grid;

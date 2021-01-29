@@ -7,6 +7,7 @@ const PrivateGallery = ({ sort }) => {
   const filters = ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"];
   const [privateImages, setPrivateImages] = useState([]);
 
+  // FIXME: sorting 방법에 따라 리로드..
   useEffect(() => {
     const id = window.localStorage.getItem("c_uid");
 
@@ -18,12 +19,13 @@ const PrivateGallery = ({ sort }) => {
       } = data;
 
       if (sort === "필터별") {
-        let private_data = [];
-        filters.map((filter) => {
-          private_data.push(private_images[filter]);
-        });
+        let private_datas = [];
+        for (let filter of filters) {
+          private_datas.push(private_images[filter]);
+        }
 
-        console.log(private_data);
+        setPrivateImages(private_datas);
+        return;
       }
 
       setPrivateImages(private_images);
@@ -38,20 +40,28 @@ const PrivateGallery = ({ sort }) => {
         {privateImages.length > 0 ? (
           <>
             {sort === "필터별" ? (
-              <>
-                {filters.map(
-                  (filter, index) => (
-                    console.log(index),
-                    (
-                      <div key={filter} className="filterContainer">
-                        <p>
-                          <u>{filter}</u>
-                        </p>
-                      </div>
-                    )
-                  )
-                )}
-              </>
+              privateImages.map((privateImageList, index) => (
+                <div className="filter_container" key={index}>
+                  <p className="filter_title">{filters[index]}</p>
+                  <div className="private_gallery_grid">
+                    {privateImageList.length > 0 ? (
+                      privateImageList.map((privateImage) => (
+                        <PrivateImageComponent
+                          key={privateImage["imageId"]}
+                          id={privateImage["id"]}
+                          imageId={privateImage["imageId"]}
+                          filter={privateImage["filter"]}
+                          imageURL={privateImage["imageURL"]}
+                          date={privateImage["date"]}
+                          like={privateImage["like"]}
+                        />
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
+              ))
             ) : (
               <>
                 <div className="private_gallery_grid">
