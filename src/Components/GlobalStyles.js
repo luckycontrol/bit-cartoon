@@ -25,7 +25,6 @@ const globalStyle = createGlobalStyle`
     body {
         background-color: #222831;
     }
-
 `;
 
 export default globalStyle;

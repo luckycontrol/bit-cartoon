@@ -16,6 +16,7 @@ const initAnimation = keyframes`
 
 const Cartoon = styled.div`
   width: 100%;
+  height: 100vh;
 
   position: absolute;
   top: 0;
@@ -39,6 +40,7 @@ const Cartoon = styled.div`
 const CartoonPresenter = ({
   drag,
   images,
+  filter,
   _handleOnDragEnter,
   _handleOnDragLeave,
   _handleOnDragOver,
@@ -46,6 +48,7 @@ const CartoonPresenter = ({
   _handleOnClick,
   _handleOnUpload,
   _handleImageDelete,
+  _handleSelectFilter,
   _handleImageTransition,
   loading,
   transition,
@@ -78,6 +81,7 @@ const CartoonPresenter = ({
             <BeforeTransfer
               drag={drag}
               images={images}
+              filter={filter}
               _handleOnDragEnter={_handleOnDragEnter}
               _handleOnDragLeave={_handleOnDragLeave}
               _handleOnDragOver={_handleOnDragOver}
@@ -85,6 +89,7 @@ const CartoonPresenter = ({
               _handleOnClick={_handleOnClick}
               _handleOnUpload={_handleOnUpload}
               _handleImageDelete={_handleImageDelete}
+              _handleSelectFilter={_handleSelectFilter}
               _handleImageTransition={_handleImageTransition}
             />
           )}

@@ -6,14 +6,15 @@ const Header = () => {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    const status = window.localStorage.getItem("login");
+    const status = window.localStorage.getItem("c_access_token");
     setLogin(Boolean(status));
   }, [login]);
 
   const _handleLogout = useCallback(() => {
     const result = window.confirm("로그아웃 하시겠습니까?");
     if (result) {
-      window.localStorage.removeItem("login");
+      window.localStorage.removeItem("c_access_token");
+      window.localStorage.removeItem("c_uid");
       setLogin(false);
     }
   }, []);
@@ -41,8 +42,14 @@ const Header = () => {
         </Link>
 
         <div className="nav-links">
+          <Link className="link" to="/detail" onClick={_handleClickLink}>
+            필터
+          </Link>
           <Link className="link" to="/cartoon" onClick={_handleClickLink}>
             이미지 변환
+          </Link>
+          <Link className="link" to="/gallery" onClick={_handleClickLink}>
+            갤러리
           </Link>
           {login ? (
             <button onClick={_handleLogout}>로그아웃</button>

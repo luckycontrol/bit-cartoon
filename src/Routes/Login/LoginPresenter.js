@@ -25,18 +25,17 @@ const Login = styled.div`
 const LoginContainer = styled.div`
   min-width: 50vh;
   height: 60vh;
-
-  padding: 15px;
-
   border-radius: 20px;
-  box-shadow: 2px 2px 15px;
-
-  z-index: 10;
+  box-shadow: 2px 2px 6px black;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   animation: ${introAnimation} 1s ease-in-out;
+
+  @media screen and (max-width: 400px) {
+    border: none;
+    box-shadow: none;
+  }
 `;
 
 const Title = styled.h1`
@@ -79,24 +78,13 @@ const LoginInputTitle = styled.h1`
 const LoginButton = styled.button`
   width: 70%;
   height: 4vh;
-
-  font-weight: bold;
-
-  border: 1px solid white;
-  color: white;
-  background-color: transparent;
+  color: black;
+  background-color: white;
   border-radius: 20em;
-
-  transition: 0.5s ease-in-out;
+  transition: 0.2s ease-in-out;
 
   :hover {
-    cursor: pointer;
-    border: none;
-    color: black;
-    background-color: white;
-    opacity: 0.9;
-
-    box-shadow: 1px 1px 1px black;
+    opacity: 0.7;
   }
 `;
 

@@ -12,22 +12,13 @@ const InputImageContainer = styled.div`
   padding: 80px 100px;
 
   .translateBtn {
+    cursor: pointer;
     width: 100%;
-    height: 4vh;
-
-    color: white;
-    background: transparent;
+    padding: 12px 0;
+    color: black;
+    background-color: white;
     border-radius: 10px;
-    border: 1px solid white;
-
-    transition: 0.5s ease-in-out;
-
-    :hover {
-      border: none;
-      color: black;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 1px 1px 1px black;
-    }
+    box-shadow: 2px 2px 2px black;
   }
 
   @media screen and (max-width: 768px) {
@@ -88,12 +79,38 @@ const BeforeImg = styled.div`
 `;
 
 const DragText = styled.span`
+  font-size: 1rem;
   color: ${(props) => props.color};
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const FilterBox = styled.div`
+  width: 100%;
+  color: white;
+
+  button {
+    padding: 0 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    overflow: auto;
+    white-space: nowrap;
+    height: 10%;
+  }
+`;
+
+const FilterText = styled.span`
+  color: white;
+  padding: 15px 0;
 `;
 
 const BeforeTransfer = ({
   drag,
   images,
+  filter,
   _handleOnDragEnter,
   _handleOnDragLeave,
   _handleOnDragOver,
@@ -101,10 +118,29 @@ const BeforeTransfer = ({
   _handleOnClick,
   _handleOnUpload,
   _handleImageDelete,
+  _handleSelectFilter,
   _handleImageTransition,
 }) => {
+  const filters = ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"];
   return (
     <InputImageContainer>
+      <FilterBox>
+        <button name="테스트1" onClick={_handleSelectFilter}>
+          테스트1
+        </button>
+        <button name="테스트2" onClick={_handleSelectFilter}>
+          테스트2
+        </button>
+        <button name="테스트3" onClick={_handleSelectFilter}>
+          테스트3
+        </button>
+        <button name="테스트4" onClick={_handleSelectFilter}>
+          테스트4
+        </button>
+        <button name="테스트5" onClick={_handleSelectFilter}>
+          테스트5
+        </button>
+      </FilterBox>
       <InputBox
         isDrag={drag}
         onDragEnter={_handleOnDragEnter}
@@ -142,6 +178,7 @@ const BeforeTransfer = ({
           </DragText>
         )}
       </InputBox>
+      {filter != "" ? <FilterText>적용될 필터 : {filter}</FilterText> : null}
       {images.length > 0 ? (
         <button className="translateBtn" onClick={_handleImageTransition}>
           이미지 변환

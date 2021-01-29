@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ResultContainer = styled.div`
@@ -65,24 +66,43 @@ const ResultContainer = styled.div`
     }
   }
 
-  button.ImageDownload {
+  div.ResultBox {
     width: 100%;
-    height: 4vh;
-    margin-top: 20px;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 
-    color: white;
-    background: transparent;
-    border-radius: 10px;
-    border: 1px solid white;
-
-    transition: 0.5s ease-in-out;
-
-    :hover {
-      border: none;
+    .result {
       color: black;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 1px 1px 1px black;
+      background-color: white;
+      border-radius: 5px;
+      width: 40%;
+      height: 4vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    /* .result {
+      width: 40%;
+      height: 4vh;
+      margin-top: 20px;
+
+      color: white;
+      background: transparent;
+      border-radius: 10px;
+      border: 1px solid white;
+
+      transition: 0.5s ease-in-out;
+
+      :hover {
+        border: none;
+        color: black;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 1px 1px 1px black;
+      }
+    } */
   }
 
   @media screen and (max-width: 768px) {
@@ -115,9 +135,14 @@ const AfterTransfer = ({
         <div className="MainImageContainer">
           <img src={mainImage.imageURL} alt="메인이미지" />
         </div>
-        <button className="ImageDownload" onClick={_handleImagesDownload}>
-          이미지 다운로드
-        </button>
+        <div className="ResultBox">
+          <Link className="result" to="/gallery">
+            이미지 갤러리
+          </Link>
+          <button className="result" onClick={_handleImagesDownload}>
+            이미지 다운로드
+          </button>
+        </div>
       </div>
     </ResultContainer>
   );

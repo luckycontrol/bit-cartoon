@@ -4,6 +4,7 @@ import { imageApi } from "../../api";
 
 const CartoonContainer = () => {
   const [drag, setDrag] = useState(false);
+  const [filter, setFilter] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [transition, setTransition] = useState(false);
@@ -130,16 +131,22 @@ const CartoonContainer = () => {
     }
   });
 
-  const _handleImageUpdate = (files) => {
-    // id, image, imageURL
-    return new Promise((resolve, reject) => {});
-  };
+  // const _handleImageUpdate = (files) => {
+  //   // id, image, imageURL
+  //   return new Promise((resolve, reject) => {});
+  // };
 
   // FIXME: 이미지 변환
   const _handleImageTransition = useCallback(
     async (e) => {
       e.stopPropagation();
       e.preventDefault();
+
+      // 필터 선택했는지 확인
+      if (filter === "") {
+        alert("필터를 선택해주세요");
+        return;
+      }
 
       const imageFiles = [];
 
@@ -148,11 +155,13 @@ const CartoonContainer = () => {
       });
 
       setLoading(true);
+
       const {
         data: { imageLength, cartoonImages },
-      } = await imageApi.imageTransition(imageFiles, imageFiles.length);
+      } = await imageApi.imageTransition(filter, imageFiles, imageFiles.length);
 
       const newCartoonImages = [];
+
       for (let i = 0; i < imageLength; i++) {
         const newCartoonImage = {
           id: i,
@@ -167,8 +176,16 @@ const CartoonContainer = () => {
       setLoading(false);
       setTransition(true);
     },
-    [images]
+    [filter, images]
   );
+
+  // FIXME: 필터 선택
+  const _handleSelectFilter = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    setFilter(e.target.name);
+  }, []);
 
   // ========================= 번환 후 사용될 함수 =========================
 
@@ -225,6 +242,7 @@ const CartoonContainer = () => {
     <CartoonPresenter
       drag={drag}
       images={images}
+      filter={filter}
       _handleOnDragEnter={_handleOnDragEnter}
       _handleOnDragLeave={_handleOnDragLeave}
       _handleOnDragOver={_handleOnDragOver}
@@ -232,6 +250,7 @@ const CartoonContainer = () => {
       _handleOnClick={_handleOnClick}
       _handleOnUpload={_handleOnUpload}
       _handleImageDelete={_handleImageDelete}
+      _handleSelectFilter={_handleSelectFilter}
       _handleImageTransition={_handleImageTransition}
       loading={loading}
       transition={transition}

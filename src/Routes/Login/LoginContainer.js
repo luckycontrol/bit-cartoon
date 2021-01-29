@@ -37,7 +37,8 @@ const LoginContainer = ({ history }) => {
     const { data } = await loginApi.login(id, pwd);
 
     if (data["result"] === "Success") {
-      window.localStorage.setItem("login", data["access_token"]);
+      window.localStorage.setItem("c_access_token", data["access_token"]);
+      window.localStorage.setItem("c_uid", data["id"]);
       history.push("/");
       window.location.reload();
       return;
