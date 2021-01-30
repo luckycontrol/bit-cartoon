@@ -43,7 +43,7 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .filterContainer p {
+  .filter_container p {
     font-size: 1.5rem;
   }
 }
