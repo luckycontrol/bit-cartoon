@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "../../../Style/Gallery/PrivateGalleryStyle.css";
 import { galleryApi } from "../../../api";
 import PrivateImageComponent from "./PrivateImageComponent";
 
-const PrivateGallery = ({ sort }) => {
-  const filters = ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"];
+const PrivateGallery = ({ filters, sort, setLoading }) => {
   const [privateImages, setPrivateImages] = useState([]);
+  const [act, setAct] = useState(false);
 
   // FIXME: sorting 방법에 따라 리로드..
   useEffect(() => {
@@ -32,63 +32,80 @@ const PrivateGallery = ({ sort }) => {
     };
 
     getPrivateData();
-  }, [sort]);
+  }, [filters, sort, act, setLoading]);
+
+  // FIXME: 이미지를 공개 갤러리로
+  const _handleMovePublicImage = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let result = window.confirm(
+      "선택하신 이미지를 공개갤러리에 업로드 하시겠습니까?"
+    );
+
+    if (result) {
+      const id = window.localStorage.getItem("c_uid");
+      galleryApi.share(id, e.target.id);
+      setAct(false);
+    }
+  }, []);
+
+  // FIXME: 이미지를 개인 갤러리로
+  const _handleMovePrivateImage = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let result = window.confirm(
+      "선택하신 이미지를 공개갤러리에서 내리시겠습니까?"
+    );
+
+    if (result) {
+      const id = window.localStorage.getItem("c_uid");
+      galleryApi.share(id, e.target.id);
+      setAct(false);
+    }
+  }, []);
+
+  // FIXME: 선택한 이미지 삭제
+  const _handleDeleteImage = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let result = window.confirm("선택하신 이미지를 삭제하시겠습니까?");
+
+    if (result) {
+      const id = window.localStorage.getItem("c_uid");
+      galleryApi.delete(id, e.target.id);
+      setAct(false);
+    }
+  }, []);
 
   return (
-    <>
-      <div className="private_gallery_box">
-        {privateImages.length > 0 ? (
-          <>
-            {sort === "필터별" ? (
-              privateImages.map((privateImageList, index) => (
-                <div className="filter_container" key={index}>
-                  <p className="filter_title">{filters[index]}</p>
-                  <div className="private_gallery_grid">
-                    {privateImageList.length > 0 ? (
-                      privateImageList.map((privateImage) => (
-                        <PrivateImageComponent
-                          key={privateImage["imageId"]}
-                          id={privateImage["id"]}
-                          imageId={privateImage["imageId"]}
-                          filter={privateImage["filter"]}
-                          imageURL={privateImage["imageURL"]}
-                          date={privateImage["date"]}
-                          like={privateImage["like"]}
-                        />
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <>
-                <div className="private_gallery_grid">
-                  {privateImages.map((privateImage) => (
-                    <PrivateImageComponent
-                      key={privateImage["imageId"]}
-                      id={privateImage["id"]}
-                      imageId={privateImage["imageId"]}
-                      filter={privateImage["filter"]}
-                      imageURL={privateImage["imageURL"]}
-                      date={privateImage["date"]}
-                      like={privateImage["like"]}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <div className="none_private_image">
-              <span>개인 갤러리가 비었습니다.</span>
-            </div>
-          </>
-        )}
-      </div>
-    </>
+    <div className="private_gallery_box">
+      {sort === "필터별" ? (
+        <></>
+      ) : privateImages.length > 0 ? (
+        <div className="private_gallery_grid">
+          {privateImages.map((privateImage) => (
+            <PrivateImageComponent
+              key={privateImage["imageId"]}
+              id={privateImage["id"]}
+              imageId={privateImage["imageId"]}
+              filter={privateImage["filter"]}
+              imageURL={privateImage["imageURL"]}
+              date={privateImage["date"]}
+              isPublic={privateImage["isPublic"]}
+              like={privateImage["like"]}
+              _handleMovePublicImage={_handleMovePublicImage}
+              _handleMovePrivateImage={_handleMovePrivateImage}
+              _handleDeleteImage={_handleDeleteImage}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>개인갤러이에 이미지가 없습니다.</p>
+      )}
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import "../../Style/Gallery/Gallery.css";
 import PublicGallery from "./PublicGallery/PublicGallery";
 import PrivateGallery from "./PrivateGallery/PrivateGallery";
+import Loading from "../../Components/Loading";
 
 const Gallery = ({
   title,
@@ -9,6 +10,9 @@ const Gallery = ({
   _handleClickSortingWayTitle,
   sort,
   _handleSortingWay,
+  filters,
+  loading,
+  setLoading,
 }) => {
   return (
     <>
@@ -65,10 +69,20 @@ const Gallery = ({
           </div>
         </div>
         <div className="gallery_content">
-          {title == "공개갤러리" ? (
-            <PublicGallery sort={sort} />
+          {loading ? (
+            <Loading text={"이미지 로딩중..."} />
+          ) : title === "공개갤러리" ? (
+            <PublicGallery
+              filters={filters}
+              sort={sort}
+              setLoading={setLoading}
+            />
           ) : (
-            <PrivateGallery sort={sort} />
+            <PrivateGallery
+              filters={filters}
+              sort={sort}
+              setLoading={setLoading}
+            />
           )}
         </div>
       </div>

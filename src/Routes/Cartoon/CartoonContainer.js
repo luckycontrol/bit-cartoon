@@ -39,33 +39,6 @@ const CartoonContainer = () => {
     e.preventDefault();
   }, []);
 
-  // FIXME: 드랍
-  const _handleOnDrop = useCallback(
-    (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-
-      setDrag(false);
-
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        _handleFiles(e.dataTransfer.files);
-      }
-    },
-    [drag, images]
-  );
-
-  // FIXME: 이미지 업로드 클릭 시
-  const _handleOnClick = useCallback(() => {
-    const fileElem = document.getElementById("fileElem");
-    fileElem.click();
-  }, []);
-
-  // FIXME: 이미지 업로드 시
-  const _handleOnUpload = useCallback(() => {
-    const fileElem = document.getElementById("fileElem");
-    _handleFiles(fileElem.files);
-  }, [images]);
-
   // FIXME: 이미지 미리보기
   const _handleFiles = useCallback(
     async (files) => {
@@ -83,14 +56,14 @@ const CartoonContainer = () => {
       });
 
       // 비회원은 한 장만
-      if (!Boolean(window.localStorage.getItem("login"))) {
+      if (!Boolean(window.localStorage.getItem("c_uid"))) {
         if (images.length + files.length > 1) {
           alert("비회원은 이미지를 한 장만 올리실 수 있습니다.");
           return;
         }
       }
       // 이미지는 5장까지만
-      if (Boolean(window.localStorage.getItem("login"))) {
+      if (Boolean(window.localStorage.getItem("c_uid"))) {
         if (images.length + files.length > 5) {
           alert("이미지는 5장까지만 업로드해주세요.");
           return;
@@ -119,6 +92,33 @@ const CartoonContainer = () => {
     [images]
   );
 
+  // FIXME: 드랍
+  const _handleOnDrop = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      setDrag(false);
+
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        _handleFiles(e.dataTransfer.files);
+      }
+    },
+    [_handleFiles]
+  );
+
+  // FIXME: 이미지 업로드 클릭 시
+  const _handleOnClick = useCallback(() => {
+    const fileElem = document.getElementById("fileElem");
+    fileElem.click();
+  }, []);
+
+  // FIXME: 이미지 업로드 시
+  const _handleOnUpload = useCallback(() => {
+    const fileElem = document.getElementById("fileElem");
+    _handleFiles(fileElem.files);
+  }, [_handleFiles]);
+
   // 이미지 삭제
   const _handleImageDelete = useCallback((e) => {
     e.stopPropagation();
@@ -126,10 +126,10 @@ const CartoonContainer = () => {
 
     let result = window.confirm("선택하신 이미지를 지우시겠습니까?");
     if (result) {
-      const update = images.filter((image) => image.id != e.target.id);
+      const update = images.filter((image) => image.id !== e.target.id);
       setImages(update);
     }
-  });
+  }, [images]);
 
   // const _handleImageUpdate = (files) => {
   //   // id, image, imageURL

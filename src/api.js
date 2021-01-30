@@ -59,6 +59,7 @@ export const imageApi = {
 };
 
 export const galleryApi = {
+  // FIXME: 개인 이미지 가져오기
   getPrivate: (id, sort) => {
     const form = new FormData();
     form.append("id", id);
@@ -67,6 +68,7 @@ export const galleryApi = {
     return cartoonApi.post("/gallery/getPrivate", form);
   },
 
+  // FIXME: 이미지 삭제
   delete: (id, imageId) => {
     const form = new FormData();
     form.append("id", id);
@@ -75,6 +77,7 @@ export const galleryApi = {
     return cartoonApi.post("/gallery/delete", form);
   },
 
+  // FIXME: 이미지 공개 갤러리로 이동
   share: (id, imageId) => {
     const form = new FormData();
     form.append("id", id);
@@ -82,4 +85,13 @@ export const galleryApi = {
 
     cartoonApi.post("/gallery/share", form);
   },
+
+  // FIXME: 이미지 개인 갤러리로 이동
+  unshare: (id, imageId) => {
+    const form = new FormData();
+    form.append("id", id);
+    form.append("imageId", imageId);
+
+    cartoonApi.post("/gallery/unshare", form);
+  }
 };

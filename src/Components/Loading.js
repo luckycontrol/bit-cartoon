@@ -61,11 +61,11 @@ const LoadingContainer = styled.div`
   }
 `;
 
-const Loading = () => {
+const Loading = ({text}) => {
   return (
     <LoadingContainer>
       <div className="loading">
-        <span>이미지 변환중...</span>
+        <span>{text}</span>
       </div>
     </LoadingContainer>
   );

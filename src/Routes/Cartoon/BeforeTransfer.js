@@ -125,21 +125,11 @@ const BeforeTransfer = ({
   return (
     <InputImageContainer>
       <FilterBox>
-        <button name="테스트1" onClick={_handleSelectFilter}>
-          테스트1
-        </button>
-        <button name="테스트2" onClick={_handleSelectFilter}>
-          테스트2
-        </button>
-        <button name="테스트3" onClick={_handleSelectFilter}>
-          테스트3
-        </button>
-        <button name="테스트4" onClick={_handleSelectFilter}>
-          테스트4
-        </button>
-        <button name="테스트5" onClick={_handleSelectFilter}>
-          테스트5
-        </button>
+        {filters.map((filter) => (
+          <button key={filter} name={filter} onClick={_handleSelectFilter}>
+            {filter}
+          </button>
+        ))}
       </FilterBox>
       <InputBox
         isDrag={drag}
@@ -178,7 +168,7 @@ const BeforeTransfer = ({
           </DragText>
         )}
       </InputBox>
-      {filter != "" ? <FilterText>적용될 필터 : {filter}</FilterText> : null}
+      {filter !== "" ? <FilterText>적용될 필터 : {filter}</FilterText> : null}
       {images.length > 0 ? (
         <button className="translateBtn" onClick={_handleImageTransition}>
           이미지 변환
