@@ -93,5 +93,5 @@ export const galleryApi = {
     form.append("imageId", imageId);
 
     cartoonApi.post("/gallery/unshare", form);
-  }
+  },
 };

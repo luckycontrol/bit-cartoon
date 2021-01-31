@@ -28,7 +28,6 @@ const PrivateGallery = ({ filters, sort }) => {
       }
 
       setPrivateImages(private_images);
-      console.log(privateImages);
     };
 
     getPrivateData();
@@ -78,34 +77,34 @@ const PrivateGallery = ({ filters, sort }) => {
   }, []);
 
   return (
-    <>
+    <div className="private_gallery_box">
       {sort === "필터별" ? (
         filters.map((filter, index) => (
           <div key={index} className="filter_container">
             <p className="filter_title">{filter}</p>
-            
+            {console.log(privateImages[index])}
           </div>
         ))
-      ) : (
-        privateImages.length > 0 ? (
-          <div className="private_gallery_grid">
-          {
-            privateImages.map((privateImage) => (
-              <PrivateImageComponent 
-                key={privateImage["imageId"]}
-                id={privateImage["id"]}
-                filter={privateImage["filter"]}
-                imageURL={privateImage["imageURL"]}
-                date={privateImage["date"]}
-                isPublic={privateImage["isPublic"]}
-                like={privateImage["like"]}
-              />
-            ))
-          }
+      ) : privateImages.length > 0 ? (
+        <div className="private_gallery_grid">
+          {privateImages.map((privateImage) => (
+            <PrivateImageComponent
+              key={privateImage["imageId"]}
+              id={privateImage["id"]}
+              filter={privateImage["filter"]}
+              imageURL={privateImage["imageURL"]}
+              date={privateImage["date"]}
+              isPublic={privateImage["isPublic"]}
+              like={privateImage["like"]}
+            />
+          ))}
         </div>
-        ) : <span className="none_private_image">개인 갤러리에 이미지가 없습니다.</span>
+      ) : (
+        <span className="none_private_image">
+          개인 갤러리에 이미지가 없습니다.
+        </span>
       )}
-    </>
+    </div>
   );
 };
 
