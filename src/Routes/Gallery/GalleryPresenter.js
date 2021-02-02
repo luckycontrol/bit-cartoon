@@ -2,7 +2,6 @@ import React from "react";
 import "../../Style/Gallery/Gallery.css";
 import PublicGallery from "./PublicGallery/PublicGallery";
 import PrivateGallery from "./PrivateGallery/PrivateGallery";
-import Loading from "../../Components/Loading";
 
 const Gallery = ({
   title,
@@ -11,8 +10,6 @@ const Gallery = ({
   sort,
   _handleSortingWay,
   filters,
-  loading,
-  setLoading,
 }) => {
   return (
     <>
@@ -69,20 +66,10 @@ const Gallery = ({
           </div>
         </div>
         <div className="gallery_content">
-          {loading ? (
-            <Loading text={"이미지 로딩중..."} />
-          ) : title === "공개갤러리" ? (
-            <PublicGallery
-              filters={filters}
-              sort={sort}
-              setLoading={setLoading}
-            />
+          {title === "공개갤러리" ? (
+            <PublicGallery filters={filters} sort={sort} />
           ) : (
-            <PrivateGallery
-              filters={filters}
-              sort={sort}
-              setLoading={setLoading}
-            />
+            <PrivateGallery filters={filters} sort={sort} />
           )}
         </div>
       </div>

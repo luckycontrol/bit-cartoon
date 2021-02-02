@@ -1,114 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-
-const ResultContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  padding: 80px 100px;
-
-  button.backBtn {
-    cursor: pointer;
-    width: 1.5rem;
-    height: 1.5rem;
-
-    border: none;
-    background-image: url("left-arrow.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: transparent;
-  }
-
-  div.ContentContainer {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  div.SmallImageContainer {
-    width: 100%;
-    height: 15vh;
-    margin: 15px 0;
-
-    overflow: auto;
-    white-space: nowrap;
-
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.7);
-
-    img {
-      width: 40%;
-      height: 100%;
-      padding: 10px;
-
-      object-fit: contain;
-      cursor: pointer;
-    }
-  }
-
-  div.MainImageContainer {
-    width: 100%;
-    height: 70vh;
-
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.7);
-
-    img {
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-
-      object-fit: contain;
-    }
-  }
-
-  div.ResultBox {
-    width: 100%;
-    padding: 15px 0;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-
-    .result {
-      color: black;
-      background-color: white;
-      border-radius: 5px;
-      width: 40%;
-      height: 4vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* .result {
-      width: 40%;
-      height: 4vh;
-      margin-top: 20px;
-
-      color: white;
-      background: transparent;
-      border-radius: 10px;
-      border: 1px solid white;
-
-      transition: 0.5s ease-in-out;
-
-      :hover {
-        border: none;
-        color: black;
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 1px 1px 1px black;
-      }
-    } */
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 80px 30px;
-  }
-`;
+import "../../Style/Transfer/AfterTransfer.css";
 
 const AfterTransfer = ({
   cartoonImages,
@@ -118,10 +10,10 @@ const AfterTransfer = ({
   _handleImagesDownload,
 }) => {
   return (
-    <ResultContainer>
-      <button className="backBtn" onClick={_handleReset}></button>
-      <div className="ContentContainer">
-        <div className="SmallImageContainer">
+    <div className="result_container">
+      <ion-icon name="arrow-back-outline" onClick={_handleReset}></ion-icon>
+      <div className="content_container">
+        <div className="smallImage_container">
           {cartoonImages.map((cartoonImage) => (
             <img
               key={cartoonImage.id}
@@ -132,19 +24,19 @@ const AfterTransfer = ({
             />
           ))}
         </div>
-        <div className="MainImageContainer">
+        <div className="mainImage_container">
           <img src={mainImage.imageURL} alt="메인이미지" />
         </div>
-        <div className="ResultBox">
-          <Link className="result" to="/gallery">
+        <div className="result_buttons">
+          <Link className="result_button" to="/gallery">
             이미지 갤러리
           </Link>
-          <button className="result" onClick={_handleImagesDownload}>
+          <button className="result_button" onClick={_handleImagesDownload}>
             이미지 다운로드
           </button>
         </div>
       </div>
-    </ResultContainer>
+    </div>
   );
 };
 

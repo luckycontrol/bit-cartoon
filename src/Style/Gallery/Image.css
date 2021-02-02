@@ -1,6 +1,6 @@
 .private_image {
-  position: relative;
   cursor: pointer;
+  position: relative;
 }
 
 .private_image img {

@@ -24,6 +24,8 @@ const globalStyle = createGlobalStyle`
 
     body {
         background-color: #222831;
+        width: 100%;
+        min-height: 100%;
     }
 `;
 

@@ -1,11 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import GalleryPresenter from "./GalleryPresenter";
 
 const GalleryContainer = () => {
   const [title, setTitle] = useState("공개갤러리");
   const [sort, setSort] = useState("최신순");
-  const [loading, setLoading] = useState(false);
-  const filters = ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"];
+  const filters = useMemo(() => ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"], [])
 
   // FIXME: 공개 / 개인 변환
   const _handleGalleryCategory = useCallback((e) => {
@@ -63,8 +62,6 @@ const GalleryContainer = () => {
       sort={sort}
       _handleSortingWay={_handleSortingWay}
       filters={filters}
-      loading={loading}
-      setLoading={setLoading}
     />
   );
 };

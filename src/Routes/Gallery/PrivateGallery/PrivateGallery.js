@@ -3,8 +3,10 @@ import "../../../Style/Gallery/PrivateGalleryStyle.css";
 import { galleryApi } from "../../../api";
 import PrivateImageComponent from "./PrivateImageComponent";
 
+
 const PrivateGallery = ({ filters, sort }) => {
   const [privateImages, setPrivateImages] = useState([]);
+  const [act, setAct] = useState(0);
 
   // FIXME: sorting 방법에 따라 리로드..
   useEffect(() => {
@@ -17,64 +19,75 @@ const PrivateGallery = ({ filters, sort }) => {
         data: { private_images },
       } = data;
 
-      if (sort === "필터별") {
-        let private_datas = [];
-        for (let filter of filters) {
-          private_datas.push(private_images[filter]);
-        }
-
-        setPrivateImages(private_datas);
-        return;
-      }
-
       setPrivateImages(private_images);
     };
 
     getPrivateData();
-  }, [filters, sort]);
+  }, [sort, act]);
 
   // FIXME: 이미지를 공개 갤러리로
-  const _handleMovePublicImage = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const _handleMovePublicImage = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
 
-    let result = window.confirm(
-      "선택하신 이미지를 공개갤러리에 업로드 하시겠습니까?"
-    );
+      let result = window.confirm(
+        "선택하신 이미지를 공개갤러리에 업로드 하시겠습니까?"
+      );
 
-    if (result) {
-      const id = window.localStorage.getItem("c_uid");
-      galleryApi.share(id, e.target.id);
-    }
-  }, []);
+      if (result) {
+        const id = e.target.id.split("/")[0];
+        const imageId = e.target.id.split("/")[1];
+
+        galleryApi.share(id, imageId);
+
+        setAct(act + 1);
+      }
+    },
+    [act]
+  );
 
   // FIXME: 이미지를 개인 갤러리로
-  const _handleMovePrivateImage = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const _handleMovePrivateImage = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
 
-    let result = window.confirm(
-      "선택하신 이미지를 공개갤러리에서 내리시겠습니까?"
-    );
+      let result = window.confirm(
+        "선택하신 이미지를 공개갤러리에서 내리시겠습니까?"
+      );
 
-    if (result) {
-      const id = window.localStorage.getItem("c_uid");
-      galleryApi.share(id, e.target.id);
-    }
-  }, []);
+      if (result) {
+        const id = e.target.id.split("/")[0];
+        const imageId = e.target.id.split("/")[1];
+
+        galleryApi.unshare(id, imageId);
+
+        setAct(act + 1);
+      }
+    },
+    [act]
+  );
 
   // FIXME: 선택한 이미지 삭제
-  const _handleDeleteImage = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const _handleDeleteImage = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
 
-    let result = window.confirm("선택하신 이미지를 삭제하시겠습니까?");
+      let result = window.confirm("선택하신 이미지를 삭제하시겠습니까?");
 
-    if (result) {
-      const id = window.localStorage.getItem("c_uid");
-      galleryApi.delete(id, e.target.id);
-    }
-  }, []);
+      if (result) {
+        const id = e.target.id.split("/")[0];
+        const imageId = e.target.id.split("/")[1];
+
+        galleryApi.delete(id, imageId);
+
+        setAct(act + 1);
+      }
+    },
+    [act]
+  );
 
   return (
     <div className="private_gallery_box">
@@ -82,7 +95,18 @@ const PrivateGallery = ({ filters, sort }) => {
         filters.map((filter, index) => (
           <div key={index} className="filter_container">
             <p className="filter_title">{filter}</p>
-            {console.log(privateImages[index])}
+            <div className="private_gallery_grid">
+              {privateImages[filter] !== undefined &&
+                privateImages[filter].map((privateImage) => (
+                  <PrivateImageComponent
+                    key={privateImage["imageId"]}
+                    privateImage={privateImage}
+                    _handleMovePublicImage={_handleMovePublicImage}
+                    _handleMovePrivateImage={_handleMovePrivateImage}
+                    _handleDeleteImage={_handleDeleteImage}
+                  />
+                ))}
+            </div>
           </div>
         ))
       ) : privateImages.length > 0 ? (
@@ -90,12 +114,11 @@ const PrivateGallery = ({ filters, sort }) => {
           {privateImages.map((privateImage) => (
             <PrivateImageComponent
               key={privateImage["imageId"]}
-              id={privateImage["id"]}
-              filter={privateImage["filter"]}
-              imageURL={privateImage["imageURL"]}
-              date={privateImage["date"]}
-              isPublic={privateImage["isPublic"]}
-              like={privateImage["like"]}
+              privateImage={privateImage}
+              _handleMovePublicImage={_handleMovePublicImage}
+              _handleMovePrivateImage={_handleMovePrivateImage}
+              _handleDeleteImage={_handleDeleteImage}
+              
             />
           ))}
         </div>
@@ -104,6 +127,7 @@ const PrivateGallery = ({ filters, sort }) => {
           개인 갤러리에 이미지가 없습니다.
         </span>
       )}
+      
     </div>
   );
 };

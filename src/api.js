@@ -94,4 +94,11 @@ export const galleryApi = {
 
     cartoonApi.post("/gallery/unshare", form);
   },
+
+  getPublic: (sort) => {
+    const form = new FormData();
+    form.append("sort", sort);
+
+    return cartoonApi.post("/gallery/getPublic", form);
+  }
 };

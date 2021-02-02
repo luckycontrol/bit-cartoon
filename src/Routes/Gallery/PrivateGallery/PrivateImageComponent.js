@@ -2,13 +2,7 @@ import React from "react";
 import "../../../Style/Gallery/Image.css";
 
 const PrivateImageComponent = ({
-  id,
-  imageId,
-  filter,
-  imageURL,
-  date,
-  isPublic,
-  like,
+  privateImage,
   _handleMovePublicImage,
   _handleMovePrivateImage,
   _handleDeleteImage,
@@ -16,29 +10,29 @@ const PrivateImageComponent = ({
   return (
     <>
       <div className="private_image">
-        <img src={imageURL} alt="개인이미지"></img>
+        <img src={privateImage["imageURL"]} alt="개인이미지"></img>
         <div className="private_image_overlay"></div>
         <div className="private_image_desc">
-          <p>사용된 필터 : {filter}</p>
-          <p>추천 수 : {like}</p>
-          <p>{date}</p>
+          <p>사용된 필터 : {privateImage["filter"]}</p>
+          <p>추천 수 : {privateImage["like"]}</p>
+          <p>{privateImage["date"]}</p>
         </div>
         <div className="private_image_options">
           <ion-icon
-            id={imageId}
+            id={`${privateImage["id"]}/${privateImage["imageId"]}`}
             name="close-circle-outline"
             onClick={_handleDeleteImage}
           ></ion-icon>
 
-          {isPublic === true ? (
+          {privateImage["isPublic"] === true ? (
             <ion-icon
-              id={imageId}
+            id={`${privateImage["id"]}/${privateImage["imageId"]}`}
               name="download-outline"
               onClick={_handleMovePrivateImage}
             ></ion-icon>
           ) : (
             <ion-icon
-              id={imageId}
+            id={`${privateImage["id"]}/${privateImage["imageId"]}`}
               name="share-outline"
               onClick={_handleMovePublicImage}
             ></ion-icon>
