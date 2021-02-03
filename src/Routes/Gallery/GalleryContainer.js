@@ -4,7 +4,7 @@ import GalleryPresenter from "./GalleryPresenter";
 const GalleryContainer = () => {
   const [title, setTitle] = useState("공개갤러리");
   const [sort, setSort] = useState("최신순");
-  const filters = useMemo(() => ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"], [])
+  const filters = useMemo(() => ["신카이 마코토", "미야자키 하야오", "호소 다 마모루"], [])
 
   // FIXME: 공개 / 개인 변환
   const _handleGalleryCategory = useCallback((e) => {

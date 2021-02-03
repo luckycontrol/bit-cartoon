@@ -1,3 +1,7 @@
+.not-scroll {
+  overflow: hidden;
+}
+
 .nav {
   position: absolute;
   width: 100%;

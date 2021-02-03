@@ -121,7 +121,7 @@ const BeforeTransfer = ({
   _handleSelectFilter,
   _handleImageTransition,
 }) => {
-  const filters = ["테스트1", "테스트2", "테스트3", "테스트4", "테스트5"];
+  const filters = ["신카이 마코토", "미야자키 하야오", "호소 다 마모루"];
   return (
     <InputImageContainer>
       <FilterBox>

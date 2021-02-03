@@ -1,20 +1,29 @@
-import React from "react"
-import "../../../Style/Gallery/Image.css"
+import React from "react";
+import "../../../Style/Gallery/Image.css";
 
 const PublicImageComponent = ({
-    publicImage
+  publicImage,
+  _handleSelectDetailImage,
+  _handleDownloadImage,
 }) => {
-    return <>
-    <div className="private_image">
-      <img src={publicImage["imageURL"]} alt="개인이미지"></img>
-      <div className="private_image_overlay"></div>
-      <div className="private_image_desc">
-        <p>사용된 필터 : {publicImage["filter"]}</p>
-        <p>추천 수 : {publicImage["like"]}</p>
-        <p>{publicImage["date"]}</p>
+  const { id, imageId, filter, imageURL, date, isPublic, like } = publicImage;
+
+  return (
+    <>
+      <div
+        className="private_image"
+        onClick={(e) => _handleSelectDetailImage(e, publicImage)}
+      >
+        <img src={imageURL} alt="개인이미지"></img>
+        <div className="private_image_overlay"></div>
+        <div className="private_image_desc">
+          <p>사용된 필터 : {filter}</p>
+          <p>추천 수 : {like}</p>
+          <p>{date}</p>
+        </div>
       </div>
-    </div>
-  </>;
-}
+    </>
+  );
+};
 
 export default PublicImageComponent;
