@@ -3,7 +3,7 @@ import axios from "axios";
 const cartoonApi = axios.create({
   baseURL: "https://luckycontrol.xyz",
   // baseURL: "http://192.168.1.9:5000",
-  // withCredentials: false, // refreshToken을 Cookie로 주고받기 위해..
+  withCredentials: false, // refreshToken을 Cookie로 주고받기 위해..
 });
 
 export const loginApi = {
