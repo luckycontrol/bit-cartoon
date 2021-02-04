@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 import { imageApi } from "../../api";
 
 const CartoonContainer = () => {
-  const [drag, setDrag] = useState(false);
   const [filter, setFilter] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,16 @@ const CartoonContainer = () => {
     e.preventDefault();
 
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      setDrag(true);
+      const drag_box = document.querySelector(".drag_box");
+      const drag_navigate = document.querySelector(".drag_navigate");
+
+      drag_box.classList.toggle("is-active");
+      drag_navigate.classList.toggle("is-active");
+
+      if (document.querySelector(".image_grid") !== null) {
+        const image_grid = document.querySelector(".image_grid");
+        image_grid.classList.toggle("disable");
+      }
     }
   }, []);
 
@@ -30,7 +38,17 @@ const CartoonContainer = () => {
   const _handleOnDragLeave = useCallback((e) => {
     e.stopPropagation();
     e.preventDefault();
-    setDrag(false);
+
+    const drag_box = document.querySelector(".drag_box");
+    const drag_navigate = document.querySelector(".drag_navigate");
+
+    drag_box.classList.toggle("is-active");
+    drag_navigate.classList.toggle("is-active");
+
+    if (document.querySelector(".image_grid") !== null) {
+      const image_grid = document.querySelector(".image_grid");
+      image_grid.classList.toggle("disable");
+    }
   }, []);
 
   // FIXME: 드래그 오버
@@ -78,7 +96,7 @@ const CartoonContainer = () => {
         let reader = new FileReader();
         reader.onload = () => {
           const newImage = {
-            id: images.length + 1,
+            id: new Date(),
             image: file,
             imageURL: reader.result,
           };
@@ -98,7 +116,16 @@ const CartoonContainer = () => {
       e.stopPropagation();
       e.preventDefault();
 
-      setDrag(false);
+      const drag_box = document.querySelector(".drag_box");
+      const drag_navigate = document.querySelector(".drag_navigate");
+
+      drag_box.classList.toggle("is-active");
+      drag_navigate.classList.toggle("is-active");
+
+      if (document.querySelector(".image_grid") !== null) {
+        const image_grid = document.querySelector(".image_grid");
+        image_grid.classList.toggle("disable");
+      }
 
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         _handleFiles(e.dataTransfer.files);
@@ -120,16 +147,19 @@ const CartoonContainer = () => {
   }, [_handleFiles]);
 
   // 이미지 삭제
-  const _handleImageDelete = useCallback((e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const _handleImageDelete = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
 
-    let result = window.confirm("선택하신 이미지를 지우시겠습니까?");
-    if (result) {
-      const update = images.filter((image) => image.id !== e.target.id);
-      setImages(update);
-    }
-  }, [images]);
+      let result = window.confirm("선택하신 이미지를 지우시겠습니까?");
+      if (result) {
+        const newImages = images.filter((image) => image.id.toString() !== e.target.id);
+        setImages(newImages);
+      }
+    },
+    [images]
+  );
 
   // const _handleImageUpdate = (files) => {
   //   // id, image, imageURL
@@ -240,7 +270,6 @@ const CartoonContainer = () => {
 
   return (
     <CartoonPresenter
-      drag={drag}
       images={images}
       filter={filter}
       _handleOnDragEnter={_handleOnDragEnter}

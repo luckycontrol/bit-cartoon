@@ -11,7 +11,9 @@ const AfterTransfer = ({
 }) => {
   return (
     <div className="result_container">
-      <ion-icon name="arrow-back-outline" onClick={_handleReset}></ion-icon>
+      <div className="reset_box">
+        <ion-icon name="arrow-back-outline" onClick={_handleReset}></ion-icon>
+      </div>
       <div className="content_container">
         <div className="smallImage_container">
           {cartoonImages.map((cartoonImage) => (

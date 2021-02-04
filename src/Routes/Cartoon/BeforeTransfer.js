@@ -1,114 +1,7 @@
-import React from "react";
-import styled, { css } from "styled-components";
-
-const InputImageContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 80px 100px;
-
-  .translateBtn {
-    cursor: pointer;
-    width: 100%;
-    padding: 12px 0;
-    color: black;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 2px 2px 2px black;
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 80px 30px;
-  }
-`;
-
-const InputBox = styled.div`
-  margin: 20px 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 2px 2px 2px black;
-  cursor: pointer;
-
-  ${(props) => {
-    if (props.isDrag) {
-      return css`
-        background: rgba(255, 255, 255, 0.7);
-      `;
-    } else {
-      return css`
-        background: rgba(0, 0, 0, 0.7);
-      `;
-    }
-  }}
-
-  input {
-    display: none;
-  }
-`;
-
-const ImageGrid = styled.div`
-  width: 100%;
-  height: 100%;
-
-  overflow: auto;
-  white-space: nowrap;
-
-  display: flex;
-  align-items: center;
-`;
-
-const BeforeImg = styled.div`
-  background-image: url(${(props) => props.imageURL});
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 50%;
-  height: 50%;
-  margin: 0 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-const DragText = styled.span`
-  font-size: 1rem;
-  color: ${(props) => props.color};
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-  }
-`;
-
-const FilterBox = styled.div`
-  width: 100%;
-  color: white;
-
-  button {
-    padding: 0 10px;
-  }
-
-  @media screen and (max-width: 768px) {
-    overflow: auto;
-    white-space: nowrap;
-    height: 10%;
-  }
-`;
-
-const FilterText = styled.span`
-  color: white;
-  padding: 15px 0;
-`;
+import React, { useMemo } from "react";
+import "../../Style/Transfer/BeforeTransfer.css";
 
 const BeforeTransfer = ({
-  drag,
   images,
   filter,
   _handleOnDragEnter,
@@ -121,62 +14,61 @@ const BeforeTransfer = ({
   _handleSelectFilter,
   _handleImageTransition,
 }) => {
-  const filters = ["신카이 마코토", "미야자키 하야오", "호소 다 마모루"];
+  const filters = useMemo(
+    () => ["신카이 마코토", "미야자키 하야오", "호소 다 마모루"],
+    []
+  );
   return (
-    <InputImageContainer>
-      <FilterBox>
-        {filters.map((filter) => (
-          <button key={filter} name={filter} onClick={_handleSelectFilter}>
-            {filter}
-          </button>
-        ))}
-      </FilterBox>
-      <InputBox
-        isDrag={drag}
-        onDragEnter={_handleOnDragEnter}
-        onDragLeave={_handleOnDragLeave}
-        onDragOver={_handleOnDragOver}
-        onDrop={_handleOnDrop}
-        onClick={_handleOnClick}
-      >
-        <input
-          id="fileElem"
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={_handleOnUpload}
-        ></input>
-        {images.length > 0 ? (
-          <>
-            <ImageGrid>
-              {images.map((image) => (
-                <BeforeImg
-                  key={image.id}
-                  id={image.id}
-                  imageURL={image.imageURL}
-                  alt="변환이미지"
-                  onClick={_handleImageDelete}
-                ></BeforeImg>
-              ))}
-            </ImageGrid>
-          </>
-        ) : drag ? (
-          <DragText color="black">여기에 놓아주세요.</DragText>
-        ) : (
-          <DragText color="white">
-            이곳을 클릭하거나 드래그로 이미지를 가져오세요.
-          </DragText>
-        )}
-      </InputBox>
-      {filter !== "" ? <FilterText>적용될 필터 : {filter}</FilterText> : null}
-      {images.length > 0 ? (
-        <button className="translateBtn" onClick={_handleImageTransition}>
-          이미지 변환
-        </button>
-      ) : (
-        <></>
-      )}
-    </InputImageContainer>
+    <>
+      <div className="input_container">
+        <div className="filter_box">
+          {filters.map((filter) => (
+            <div key={filter} className="filter">
+              <button name={filter} onClick={_handleSelectFilter}>
+                {filter}
+              </button>
+              <div className="filter_outline"></div>
+            </div>
+          ))}
+        </div>
+        <div className="input_box">
+          <div
+            className="drag_box"
+            onDragEnter={_handleOnDragEnter}
+            onDragLeave={_handleOnDragLeave}
+            onDragOver={_handleOnDragOver}
+            onDrop={_handleOnDrop}
+            onClick={_handleOnClick}
+          >
+            <input
+              id="fileElem"
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={_handleOnUpload}
+            ></input>
+            <p className="drag_navigate">이곳에 드래그하여 옮겨주세요!</p>
+            {images.length > 0 && (
+              <div className="image_grid">
+                {images.map((image) => (
+                  <img
+                    key={image.id}
+                    id={image.id}
+                    src={image.imageURL}
+                    onClick={_handleImageDelete}
+                    alt="변환할 이미지"
+                  ></img>
+                ))}
+              </div>
+            )}
+          </div>
+          {filter !== "" ? (
+            <p className="filter_paragraph">적용될 필터 : {filter}</p>
+          ) : null}
+          <button className="translate_btn" onClick={_handleImageTransition}>이미지 변환</button>
+        </div>
+      </div>
+    </>
   );
 };
 

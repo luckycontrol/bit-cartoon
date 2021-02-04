@@ -38,7 +38,6 @@ const Cartoon = styled.div`
 `;
 
 const CartoonPresenter = ({
-  drag,
   images,
   filter,
   _handleOnDragEnter,
@@ -79,7 +78,6 @@ const CartoonPresenter = ({
           ) : (
             // FIXME: 이미지 변환 전
             <BeforeTransfer
-              drag={drag}
               images={images}
               filter={filter}
               _handleOnDragEnter={_handleOnDragEnter}
