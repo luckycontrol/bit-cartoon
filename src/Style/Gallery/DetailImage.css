@@ -50,7 +50,7 @@ ion-icon {
 }
 
 .detail_image_box img {
-    width: 50%;
+    width: 40%;
     object-fit: contain;
 }
 

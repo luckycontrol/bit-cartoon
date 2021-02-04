@@ -6,7 +6,6 @@ import DetailImageComponent from "../DetailImageComponent";
 
 const PublicGallery = ({ filters, sort }) => {
   const [publicImages, setPublicImages] = useState([]);
-  const [act, setAct] = useState(0);
   const [detailImageState, setDetailImageState] = useState(false);
   const [detailImage, setDetailImage] = useState({});
 
@@ -22,7 +21,7 @@ const PublicGallery = ({ filters, sort }) => {
     };
 
     getPublicData();
-  }, [sort, act]);
+  }, [sort]);
 
   // FIXME: 선택한 이미지 자세히보기
   const _handleSelectDetailImage = useCallback((e, detailImage) => {

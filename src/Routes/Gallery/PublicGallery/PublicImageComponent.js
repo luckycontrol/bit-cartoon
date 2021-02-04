@@ -6,7 +6,7 @@ const PublicImageComponent = ({
   _handleSelectDetailImage,
   _handleDownloadImage,
 }) => {
-  const { id, imageId, filter, imageURL, date, isPublic, like } = publicImage;
+  const { filter, imageURL, date, like } = publicImage;
 
   return (
     <>

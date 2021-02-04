@@ -58,7 +58,6 @@ const DetailImageComponent = ({
             <p>{date}</p>
           </div>
         </div>
-        <div className="detail_image_overlay"></div>
       </div>
     </>
   );
