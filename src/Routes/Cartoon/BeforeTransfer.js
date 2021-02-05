@@ -23,12 +23,11 @@ const BeforeTransfer = ({
       <div className="input_container">
         <div className="filter_box">
           {filters.map((filter) => (
-            <div key={filter} className="filter">
-              <button name={filter} onClick={_handleSelectFilter}>
+            <div id={filter} key={filter} className="filter">
+              <button name={filter} onClick={(e) => _handleSelectFilter(e, filter)}>
                 {filter}
               </button>
-              <div className="filter_outline"></div>
-            </div>
+            </div>  
           ))}
         </div>
         <div className="input_box">

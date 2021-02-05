@@ -154,7 +154,9 @@ const CartoonContainer = () => {
 
       let result = window.confirm("선택하신 이미지를 지우시겠습니까?");
       if (result) {
-        const newImages = images.filter((image) => image.id.toString() !== e.target.id);
+        const newImages = images.filter(
+          (image) => image.id.toString() !== e.target.id
+        );
         setImages(newImages);
       }
     },
@@ -210,9 +212,17 @@ const CartoonContainer = () => {
   );
 
   // FIXME: 필터 선택
-  const _handleSelectFilter = useCallback((e) => {
+  const _handleSelectFilter = useCallback((e, filterName) => {
     e.stopPropagation();
     e.preventDefault();
+
+    if (document.getElementsByClassName("is-selected")[0]) {
+      const active_filter = document.getElementsByClassName("is-selected")[0];
+      active_filter.classList.toggle("is-selected");
+    }
+    
+    const new_filter = document.getElementById(filterName);
+    new_filter.classList.toggle("is-selected");
 
     setFilter(e.target.name);
   }, []);

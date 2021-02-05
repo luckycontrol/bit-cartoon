@@ -7,16 +7,35 @@
 }
 
 .filter {
-    padding: 0 10px;
+    position: relative;
+    margin: 0 20px;
+    padding-bottom: 10px;
     outline: none;
 }
 
-.filter_outline {
-    background-color: white;
-    height: 4px;
-    border-radius: 4px;
+.filter::before {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #dfe2ea;
+    border-radius: 8px;
+    transition: .3s;
     opacity: 0;
 }
+
+.filter.is-selected::before {
+    opacity: 1;
+    bottom: 0;
+}
+
+.filter:not(.is-selected):hover::before {
+    opacity: 1;
+    bottom: 0;
+}
+
 
 .input_box {
     width: 100%;
