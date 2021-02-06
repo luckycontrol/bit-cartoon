@@ -51,6 +51,7 @@ const BeforeTransfer = ({
               <div className="image_grid">
                 {images.map((image) => (
                   <img
+                    draggable="false"
                     key={image.id}
                     id={image.id}
                     src={image.imageURL}

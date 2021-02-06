@@ -21,15 +21,24 @@ const CartoonContainer = () => {
     e.preventDefault();
 
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      const drag_box = document.querySelector(".drag_box");
-      const drag_navigate = document.querySelector(".drag_navigate");
+      let drag_box = document.querySelector(".drag_box");
+      let drag_navigate = document.querySelector(".drag_navigate");
 
-      drag_box.classList.toggle("is-active");
-      drag_navigate.classList.toggle("is-active");
+      if (
+        drag_box.classList.length === 1 &&
+        drag_navigate.classList.length === 1
+      ) {
+        drag_box.classList.toggle("is-active");
+        drag_navigate.classList.toggle("is-active");
+      }
 
+      // 이미지가 몇 개 올려진게 있으면..
       if (document.querySelector(".image_grid") !== null) {
         const image_grid = document.querySelector(".image_grid");
-        image_grid.classList.toggle("disable");
+
+        if (image_grid.classList.length === 1) {
+          image_grid.classList.toggle("disable");
+        }
       }
     }
   }, []);
@@ -39,15 +48,23 @@ const CartoonContainer = () => {
     e.stopPropagation();
     e.preventDefault();
 
-    const drag_box = document.querySelector(".drag_box");
-    const drag_navigate = document.querySelector(".drag_navigate");
+    let drag_box = document.querySelector(".drag_box");
+    let drag_navigate = document.querySelector(".drag_navigate");
 
-    drag_box.classList.toggle("is-active");
-    drag_navigate.classList.toggle("is-active");
+    if (
+      drag_box.classList.length === 2 &&
+      drag_navigate.classList.length === 2
+    ) {
+      drag_box.classList.toggle("is-active");
+      drag_navigate.classList.toggle("is-active");
+    }
 
     if (document.querySelector(".image_grid") !== null) {
       const image_grid = document.querySelector(".image_grid");
-      image_grid.classList.toggle("disable");
+
+      if (image_grid.classList.length === 2) {
+        image_grid.classList.toggle("disable");
+      }
     }
   }, []);
 
@@ -61,17 +78,20 @@ const CartoonContainer = () => {
   const _handleFiles = useCallback(
     async (files) => {
       let inputFiles = Array.from(files);
+      let result = true;
       // 이미지 파일인지 검사
       inputFiles.forEach((file) => {
         if (!file.type.startsWith("image/")) {
           alert("이미지 파일만 넣어주세요.");
-          return;
+          result = false;
         }
         if (file.type.startsWith("image/svg")) {
           alert("벡터 이미지는 넣을실 수 없습니다.");
-          return;
+          result = false;
         }
       });
+
+      if (!result) { return; }
 
       // 비회원은 한 장만
       if (!Boolean(window.localStorage.getItem("c_uid"))) {
@@ -116,19 +136,27 @@ const CartoonContainer = () => {
       e.stopPropagation();
       e.preventDefault();
 
-      const drag_box = document.querySelector(".drag_box");
-      const drag_navigate = document.querySelector(".drag_navigate");
-
-      drag_box.classList.toggle("is-active");
-      drag_navigate.classList.toggle("is-active");
-
-      if (document.querySelector(".image_grid") !== null) {
-        const image_grid = document.querySelector(".image_grid");
-        image_grid.classList.toggle("disable");
-      }
-
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         _handleFiles(e.dataTransfer.files);
+
+        let drag_box = document.querySelector(".drag_box");
+        let drag_navigate = document.querySelector(".drag_navigate");
+
+        if (
+          drag_box.classList.length === 2 &&
+          drag_navigate.classList.length === 2
+        ) {
+          drag_box.classList.toggle("is-active");
+          drag_navigate.classList.toggle("is-active");
+        }
+
+        if (document.querySelector(".image_grid") !== null) {
+          const image_grid = document.querySelector(".image_grid");
+
+          if (image_grid.classList.length === 2) {
+            image_grid.classList.toggle("disable");
+          }
+        }
       }
     },
     [_handleFiles]
@@ -162,11 +190,6 @@ const CartoonContainer = () => {
     },
     [images]
   );
-
-  // const _handleImageUpdate = (files) => {
-  //   // id, image, imageURL
-  //   return new Promise((resolve, reject) => {});
-  // };
 
   // FIXME: 이미지 변환
   const _handleImageTransition = useCallback(
@@ -220,7 +243,7 @@ const CartoonContainer = () => {
       const active_filter = document.getElementsByClassName("is-selected")[0];
       active_filter.classList.toggle("is-selected");
     }
-    
+
     const new_filter = document.getElementById(filterName);
     new_filter.classList.toggle("is-selected");
 
