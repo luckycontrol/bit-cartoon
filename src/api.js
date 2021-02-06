@@ -95,10 +95,28 @@ export const galleryApi = {
     cartoonApi.post("/gallery/unshare", form);
   },
 
+  // FIXME: 공개갤러리 이미지 가져오기
   getPublic: (sort) => {
     const form = new FormData();
     form.append("sort", sort);
 
     return cartoonApi.post("/gallery/getPublic", form);
+  },
+
+  // FIXME: 개인갤러리 ( 필터별 ) 데이터 가져오기
+  getPrivateByFilter: (id, filter) => {
+    const form = new FormData();
+    form.append("id", id);
+    form.append("filter", filter);
+
+    return cartoonApi.post("/gallery/getPrivateByFilter", form);
+  },
+
+  // FIXME: 공개갤러리 ( 필터별 ) 데이터 가져오기
+  getPublicByFilter: (filter) => {
+    const form = new FormData();
+    form.append("filter", filter);
+
+    return cartoonApi.post("/gallery/getPublicByFilter", form);
   }
 };

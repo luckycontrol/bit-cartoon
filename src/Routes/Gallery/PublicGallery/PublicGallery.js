@@ -4,7 +4,7 @@ import PublicImageComponent from "./PublicImageComponent";
 import "../../../Style/Gallery/PrivateGalleryStyle.css";
 import DetailImageComponent from "../DetailImageComponent";
 
-const PublicGallery = ({ filters, sort }) => {
+const PublicGallery = ({ sort }) => {
   const [publicImages, setPublicImages] = useState([]);
   const [detailImageState, setDetailImageState] = useState(false);
   const [detailImage, setDetailImage] = useState({});
@@ -22,6 +22,33 @@ const PublicGallery = ({ filters, sort }) => {
 
     getPublicData();
   }, [sort]);
+
+  // FIXME: 필터 선택 및 데이터 가져오기
+  const _handleSelectFilter = useCallback((e) => {
+    // 필터에 맞는 데이터 가져오기
+    const getFilterData = async () => {
+      let data = await galleryApi.getPublicByFilter(e.target.name);
+      let {
+        data: { filter_images },
+      } = data;
+
+      setPublicImages(filter_images);
+    };
+
+    // 데이터 수정하기
+    getFilterData();
+
+    // 하단 밑줄 수정하기
+    const filter_btns = document.getElementsByClassName("filter_btn");
+    for (let filter of filter_btns) {
+      if (filter.classList.length > 1) {
+        filter.classList.toggle("is-selected");
+        break;
+      }
+    }
+
+    e.target.classList.toggle("is-selected");
+  }, []);
 
   // FIXME: 선택한 이미지 자세히보기
   const _handleSelectDetailImage = useCallback((e, detailImage) => {
@@ -65,24 +92,49 @@ const PublicGallery = ({ filters, sort }) => {
   return (
     <div className="private_gallery_box">
       {sort === "필터별" ? (
-        filters.map((filter, index) => (
-          <div key={index} className="filter_container">
-            <p className="filter_title">{filter}</p>
-            <div className="private_gallery_grid">
-              {publicImages[filter] !== undefined &&
-                publicImages[filter].map((publicImage) => (
-                  <PublicImageComponent
-                    key={publicImage["imageId"]}
-                    type="public"
-                    publicImage={publicImage}
-                    _handleSelectDetailImage={_handleSelectDetailImage}
-                    _handleCancelDetailImage={_handleCancelDetailImage}
-                    _handleDownloadImage={_handleDownloadImage}
-                  />
-                ))}
-            </div>
+        <>
+          <div className="filter_container">
+            <button
+              className="filter_btn is-selected"
+              name="신카이 마코토"
+              onClick={_handleSelectFilter}
+            >
+              신카이 마코토
+            </button>
+            <button
+              className="filter_btn"
+              name="미야자키 하야오"
+              onClick={_handleSelectFilter}
+            >
+              미야자키 하야오
+            </button>
+            <button
+              className="filter_btn"
+              name="호소 다 마모루"
+              onClick={_handleSelectFilter}
+            >
+              호소 다 마모루
+            </button>
           </div>
-        ))
+          {publicImages.length > 0 ? (
+            <div className="private_gallery_grid">
+              {publicImages.map((publicImage) => (
+                <PublicImageComponent
+                  key={publicImage["imageId"]}
+                  type="public"
+                  publicImage={publicImage}
+                  _handleSelectDetailImage={_handleSelectDetailImage}
+                  _handleCancelDetailImage={_handleCancelDetailImage}
+                  _handleDownloadImage={_handleDownloadImage}
+                />
+              ))}
+            </div>
+          ) : (
+            <span className="none_private_image">
+              공개 갤러리에 이미지가 없습니다.
+            </span>
+          )}
+        </>
       ) : publicImages.length > 0 ? (
         <div className="private_gallery_grid">
           {publicImages.map((publicImage) => (
