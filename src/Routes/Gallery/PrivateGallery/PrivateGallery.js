@@ -111,9 +111,17 @@ const PrivateGallery = ({ sort }) => {
         const id = e.target.id.split("/")[0];
         const imageId = e.target.id.split("/")[1];
 
-        galleryApi.delete(id, imageId);
+        const imageDelete = async () => {
+          const {
+            data: { result },
+          } = await galleryApi.delete(id, imageId);
+          return result;
+        };
 
-        setAct(act + 1);
+        const delete_result = imageDelete();
+        if (delete_result === "OK") {
+          setAct(act + 1);
+        }
       }
     },
     [act]
@@ -162,48 +170,48 @@ const PrivateGallery = ({ sort }) => {
     <div className="private_gallery_box">
       {sort === "필터별" ? (
         <>
-        <div className="filter_container">
-          <button
-            className="filter_btn is-selected"
-            name="신카이 마코토"
-            onClick={_handleSelectFilter}
-          >
-            신카이 마코토
-          </button>
-          <button
-            className="filter_btn"
-            name="미야자키 하야오"
-            onClick={_handleSelectFilter}
-          >
-            미야자키 하야오
-          </button>
-          <button
-            className="filter_btn"
-            name="호소 다 마모루"
-            onClick={_handleSelectFilter}
-          >
-            호소 다 마모루
-          </button>
-        </div>
-        {privateImages.length > 0 ? (
-          <div className="private_gallery_grid">
-            {privateImages.map((privateImage) => (
-              <PrivateImageComponent
-                key={privateImage["imageId"]}
-                type="public"
-                privateImage={privateImage}
-                _handleSelectDetailImage={_handleSelectDetailImage}
-                _handleCancelDetailImage={_handleCancelDetailImage}
-                _handleDownloadImage={_handleDownloadImage}
-              />
-            ))}
+          <div className="filter_container">
+            <button
+              className="filter_btn is-selected"
+              name="신카이 마코토"
+              onClick={_handleSelectFilter}
+            >
+              신카이 마코토
+            </button>
+            <button
+              className="filter_btn"
+              name="미야자키 하야오"
+              onClick={_handleSelectFilter}
+            >
+              미야자키 하야오
+            </button>
+            <button
+              className="filter_btn"
+              name="호소 다 마모루"
+              onClick={_handleSelectFilter}
+            >
+              호소 다 마모루
+            </button>
           </div>
-        ) : (
-          <span className="none_private_image">
-            개인 갤러리에 이미지가 없습니다.
-          </span>
-        )}
-      </>
+          {privateImages.length > 0 ? (
+            <div className="private_gallery_grid">
+              {privateImages.map((privateImage) => (
+                <PrivateImageComponent
+                  key={privateImage["imageId"]}
+                  type="public"
+                  privateImage={privateImage}
+                  _handleSelectDetailImage={_handleSelectDetailImage}
+                  _handleCancelDetailImage={_handleCancelDetailImage}
+                  _handleDownloadImage={_handleDownloadImage}
+                />
+              ))}
+            </div>
+          ) : (
+            <span className="none_private_image">
+              개인 갤러리에 이미지가 없습니다.
+            </span>
+          )}
+        </>
       ) : privateImages.length > 0 ? (
         <div className="private_gallery_grid">
           {privateImages.map((privateImage) => (
