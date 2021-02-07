@@ -112,16 +112,14 @@ const PrivateGallery = ({ sort }) => {
         const imageId = e.target.id.split("/")[1];
 
         const imageDelete = async () => {
-          const {
-            data: { result },
-          } = await galleryApi.delete(id, imageId);
-          return result;
+          const { data: { result } } = await galleryApi.delete(id, imageId);
+          
+          if (result === "OK") {
+            setAct(act + 1);
+          }
         };
 
-        const delete_result = imageDelete();
-        if (delete_result === "OK") {
-          setAct(act + 1);
-        }
+        imageDelete();
       }
     },
     [act]

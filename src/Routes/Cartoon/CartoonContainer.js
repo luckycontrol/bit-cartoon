@@ -76,7 +76,7 @@ const CartoonContainer = () => {
 
   // FIXME: 이미지 미리보기
   const _handleFiles = useCallback(
-    async (files) => {
+    (files) => {
       let inputFiles = Array.from(files);
       let result = true;
       // 이미지 파일인지 검사
@@ -91,7 +91,9 @@ const CartoonContainer = () => {
         }
       });
 
-      if (!result) { return; }
+      if (!result) {
+        return;
+      }
 
       // 비회원은 한 장만
       if (!Boolean(window.localStorage.getItem("c_uid"))) {
@@ -108,6 +110,12 @@ const CartoonContainer = () => {
         }
       }
 
+      const getRandomInt = (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+      }
+
       // 만약 images.length 가 0이 아니면, index = images.length 부터 시작
       // imageLength = imageLength + images.legnth
       let newImages = [...images];
@@ -116,7 +124,7 @@ const CartoonContainer = () => {
         let reader = new FileReader();
         reader.onload = () => {
           const newImage = {
-            id: new Date(),
+            id: getRandomInt(0, 10000),
             image: file,
             imageURL: reader.result,
           };

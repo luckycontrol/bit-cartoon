@@ -32,8 +32,18 @@ const Header = () => {
   const _handleClickLink = useCallback(() => {
     const burger = document.querySelector(".burger");
     const nav = document.querySelector(".nav-links");
+    const body = document.getElementsByTagName("body")[0];
+
     nav.classList.toggle("nav-active");
     burger.classList.toggle("toggle");
+    
+    for (let className of body.classList) {
+      if (className === "not-scroll") {
+        body.classList.toggle("not-scroll");
+        break;
+      }
+    }
+
   }, []);
 
   return (
