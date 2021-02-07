@@ -18,7 +18,8 @@ const LoadingContainer = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: ${(props) => (props.usage === "transfer" ? "center" : "none")};
+  margin-top: ${(props) => (props.usage === "transfer" ? "10px" : "10rem")};
 
   div.loading {
     width: 200px;
@@ -59,11 +60,15 @@ const LoadingContainer = styled.div`
     border-top: 10px solid #3498db;
     transform: rotate(240deg);
   }
+
+  @media screen and (max-width: 378px) {
+    margin-top: ${(props) => (props.usage === "transfer" ? "10px" : "5rem")};
+  }
 `;
 
-const Loading = ({text}) => {
+const Loading = ({ text, usage }) => {
   return (
-    <LoadingContainer>
+    <LoadingContainer usage={usage}>
       <div className="loading">
         <span>{text}</span>
       </div>

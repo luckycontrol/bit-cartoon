@@ -65,7 +65,7 @@ const CartoonPresenter = ({
       <Cartoon>
         <div className="cartoonContainer">
           {loading ? (
-            <Loading text={"이미지 변환중..."}/>
+            <Loading text={"이미지 변환중..."} usage={"transfer"}/>
           ) : // FIXME: 이미지 변환 후
           transition ? (
             <AfterTransfer

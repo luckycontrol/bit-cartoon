@@ -3,14 +3,17 @@ import { galleryApi } from "../../../api";
 import PublicImageComponent from "./PublicImageComponent";
 import "../../../Style/Gallery/PrivateGalleryStyle.css";
 import DetailImageComponent from "../DetailImageComponent";
+import Loading from "../../../Components/Loading";
 
 const PublicGallery = ({ sort }) => {
   const [publicImages, setPublicImages] = useState([]);
   const [detailImageState, setDetailImageState] = useState(false);
   const [detailImage, setDetailImage] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getPublicData = async () => {
+      setLoading(true);
       let data = await galleryApi.getPublic(sort);
 
       let {
@@ -18,6 +21,7 @@ const PublicGallery = ({ sort }) => {
       } = data;
 
       setPublicImages(private_images);
+      setLoading(false);
     };
 
     getPublicData();
@@ -89,7 +93,9 @@ const PublicGallery = ({ sort }) => {
     document.body.removeChild(downloadLink);
   }, []);
 
-  return (
+  return loading ? (
+    <Loading text={"이미지를 불러오는중..."} usage={"load"} />
+  ) : (
     <div className="private_gallery_box">
       {sort === "필터별" ? (
         <>

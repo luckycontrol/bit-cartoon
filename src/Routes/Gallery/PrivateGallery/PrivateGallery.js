@@ -1,20 +1,23 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "../../../Style/Gallery/PrivateGalleryStyle.css";
-import { galleryApi } from "../../../api";
-import PrivateImageComponent from "./PrivateImageComponent";
-import DetailImageComponent from "../DetailImageComponent";
+import { galleryApi }         from "../../../api";
+import PrivateImageComponent  from "./PrivateImageComponent";
+import DetailImageComponent   from "../DetailImageComponent";
+import Loading from "../../../Components/Loading";
 
 const PrivateGallery = ({ sort }) => {
   const [privateImages, setPrivateImages] = useState([]);
   const [act, setAct] = useState(0);
   const [detailImageState, setDetailImageState] = useState(false);
   const [detailImage, setDetailImage] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // FIXME: sorting 방법에 따라 리로드..
   useEffect(() => {
     const id = window.localStorage.getItem("c_uid");
 
     const getPrivateData = async () => {
+      setLoading(true);
       let data = await galleryApi.getPrivate(id, sort);
 
       let {
@@ -22,6 +25,7 @@ const PrivateGallery = ({ sort }) => {
       } = data;
 
       setPrivateImages(private_images);
+      setLoading(false);
     };
 
     getPrivateData();
@@ -112,8 +116,10 @@ const PrivateGallery = ({ sort }) => {
         const imageId = e.target.id.split("/")[1];
 
         const imageDelete = async () => {
-          const { data: { result } } = await galleryApi.delete(id, imageId);
-          
+          const {
+            data: { result },
+          } = await galleryApi.delete(id, imageId);
+
           if (result === "OK") {
             setAct(act + 1);
           }
@@ -164,7 +170,9 @@ const PrivateGallery = ({ sort }) => {
     document.body.removeChild(downloadLink);
   }, []);
 
-  return (
+  return loading ? (
+    <Loading text={"이미지를 불러오는중..."} usage={"load"}/>
+  ) : (
     <div className="private_gallery_box">
       {sort === "필터별" ? (
         <>
