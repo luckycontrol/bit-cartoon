@@ -10,14 +10,6 @@ const globalStyle = createGlobalStyle`
         font-family: Binggrae;
         color: white;
     }
-    
-    body {
-        width: 100%;
-        height: 100vh;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("background.jpg");
-        background-size: cover;
-        background-position: center;
-    }
 
     a {
         text-decoration: none;

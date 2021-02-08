@@ -54,7 +54,7 @@ const Header = () => {
         </Link>
 
         <div className="nav-links">
-          <Link className="link" to="/detail" onClick={_handleClickLink}>
+          <Link className="link" to="/filter" onClick={_handleClickLink}>
             필터
           </Link>
           <Link className="link" to="/cartoon" onClick={_handleClickLink}>
