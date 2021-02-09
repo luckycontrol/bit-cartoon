@@ -25,7 +25,7 @@ export default function PlotPresenter({ csvFile }) {
         setData(data);
       }
     );
-  });
+  }, []);
 
   return data.color === undefined ? (
     <></>
@@ -54,7 +54,7 @@ export default function PlotPresenter({ csvFile }) {
           labels: ["red (x)", "green (y)", "blue (z)"],
         },
       ]}
-      // layout={{ width: 500, height: 500 }}
+      layout={{ width: 300, height: 300 }}
     />
   );
 }
