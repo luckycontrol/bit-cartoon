@@ -21,11 +21,9 @@ const FilterPresenter = () => {
     e.preventDefault();
 
     const info_container = document.querySelector(".info_container");
-    const body = document.getElementsByTagName("body");
+    const body = document.getElementsByTagName("body")[0];
     info_container.classList.toggle("is-active");
-    body.overflow = "hidden";
-
-
+    body.classList.toggle("not-scroll");
   }, []);
 
   return (
@@ -52,9 +50,10 @@ const FilterPresenter = () => {
       </div>
       {/* 필터 페이지란 무엇인가...? */}
       <div className="info_container">
-        <div className="info_box"> 
-          
+        <div className="info_close">
+          <ion-icon name="close-circle-outline"></ion-icon>
         </div>
+        <div className="info_box"></div>
         <div className="info_overlay"></div>
       </div>
     </>
