@@ -8,7 +8,7 @@
     padding: 80px 60px;
 }
 
-.filter_info {
+.filter_page_info {
     width: 100%;
     height: 5vh;
 }
@@ -18,30 +18,45 @@ ion-icon {
     cursor: pointer;
 }
 
-.filters_all_in_one {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.filter_selected_btn {
+    width: 150px;
+    height: 50px;
+    color: #a3d2ca;
+    background: transparent;
+    border: 1px solid #a3d2ca;
+    border-radius: 4px;
+    outline: none;
+    transition: .3s;
 }
 
-.filter_title_and_info {
-    width: 70%;
-    height: 60vh;
-    margin-top: 30px;
-}
-
-.filter_title {
-    font-size: 2rem;
-    font-weight: bold;
+.filter_selected_btn:hover {
     color: white;
-    margin-bottom: 10px;
+    background: #a3d2ca;
 }
 
-.filter_box {
-    display: flex;
-    justify-content: space-between;   
-    align-items: center;
+.filter_select_list {
+    display: none;
+    position: absolute;
+    width: 150px;
+    height: 250px;
+    background: transparent;
+    border: 1px solid #a3d2ca;
+    border-radius: 4px;
+}
+
+.filter_selected_btn.is-active .filter_select_list {
+    display: show;
+}
+
+.filter_select_list button {
+    display: block;
+    width: 150px;
+    height: 50px;
+    outline: 0;
+}
+
+.filter_select_list button:hover {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .filter_box img {
@@ -91,7 +106,7 @@ ion-icon {
     opacity: 1;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
 
     .filter_container {
         padding: 80px 30px;

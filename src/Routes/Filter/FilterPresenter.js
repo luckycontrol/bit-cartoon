@@ -5,15 +5,20 @@ import "../../Style/Filter/FilterPresenter.css";
 const FilterPresenter = () => {
   const filterNames = useMemo(
     () => [
-      ["5Centimater_crop_BGR", "초속5센티미터"],
-      ["Howls_crop_BGR", "하울의 움직이는 성"],
-      ["Paprika_BGR", "파프리카"],
-      ["snow_BGR", "겨울왕국"],
-      ["SummerWars_RGB_6cut", "썸머워즈"],
-      ["yourname_RGB_6cut", "너의이름은"],
+      ["초속 5센티미터", "5Centimater_crop_BGR"],
+      ["하울의 움직이는 성", "Howls_crop_BGR"],
+      ["파프리카", "Paprika_BGR"],
+      ["겨울 왕국", "snow_BGR"],
+      ["썸머워즈", "SummerWars_RGB_6cut"],
+      ["너의 이름은", "yourname_RGB_6cut"],
     ],
     []
   );
+
+  const [filterName, setFilterName] = useState([
+    "초속 5센티미터",
+    "5Centimater_crop_BGR",
+  ]);
 
   // FIXME: 필터 사용법 보는 버튼
   const _handleSetFilterInfo = useCallback((e) => {
@@ -26,27 +31,41 @@ const FilterPresenter = () => {
     body.classList.toggle("not-scroll");
   }, []);
 
+  // FIXME: 필터 버튼
+  const _handleClickFilterBtn = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const filter_btn = document.querySelector(".filter_select_list");
+    filter_btn.classList.toggle("is-active");
+  }, [])
+
   return (
     <>
       <div className="filter_container">
-        <div className="filter_info">
+        <div className="filter_page_info">
           <ion-icon
             className="info_btn"
             name="alert-circle-outline"
             onClick={_handleSetFilterInfo}
           ></ion-icon>
         </div>
-        <div className="filters_all_in_one">
-          {filterNames.map((filter) => (
-            <div key={filter} className="filter_title_and_info">
-              <p className="filter_title">{filter[1]}</p>
-              <div className="filter_box">
-                <img src={`poster/${filter[0]}.jpg`} alt="필터 이미지"></img>
-                <PlotPresenter classname="plot" csvFile={filter[0]} />
-              </div>
-            </div>
-          ))}
+        <div>
+          <button className="filter_selected_btn" onClick={_handleClickFilterBtn}>{filterName[0]}</button>
+          <div className="filter_select_list">
+            {filterNames.map((filter) =>
+              filter[0] !== filterName[0] ? (
+                <button className="filters">{filter[0]}</button>
+              ) : (
+                <></>
+              )
+            )}
+          </div>
         </div>
+        {/* <div className="filter_box">
+          <img src={`poster/${filterName[1]}.jpg`} alt="포스터"></img>
+          <PlotPresenter csvFile={filterName[1]} />
+        </div> */}
       </div>
       {/* 필터 페이지란 무엇인가...? */}
       <div className="info_container">
@@ -61,6 +80,3 @@ const FilterPresenter = () => {
 };
 
 export default FilterPresenter;
-{
-  /* <PlotPresenter csvFile="5Centimater_crop_BGR" /> */
-}

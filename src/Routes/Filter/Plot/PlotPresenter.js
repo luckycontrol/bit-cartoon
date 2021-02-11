@@ -50,11 +50,12 @@ export default function PlotPresenter({ csvFile }) {
               (color) => `rgba(${color.x}, ${color.y}, ${color.z})`
             ),
             size: [1, 5, 12, 20, 25],
+            bgcolor: "rgba(0, 0, 0, 0.5)",
           },
           labels: ["red (x)", "green (y)", "blue (z)"],
         },
       ]}
-      layout={{ width: 300, height: 300 }}
+      layout={{ width: 500, height: 500, margin: { l: 0, r: 0, b: 0, t: 0 } }}
     />
   );
 }
