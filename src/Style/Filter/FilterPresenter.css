@@ -35,17 +35,18 @@ ion-icon {
 }
 
 .filter_select_list {
-    display: none;
+    display: show;
     position: absolute;
     width: 150px;
     height: 250px;
     background: transparent;
     border: 1px solid #a3d2ca;
     border-radius: 4px;
+    transition: .3s;
 }
 
-.filter_selected_btn.is-active .filter_select_list {
-    display: show;
+.filter_select_list:not(.is-active) {
+    display: none;
 }
 
 .filter_select_list button {
@@ -59,6 +60,14 @@ ion-icon {
     background: rgba(0, 0, 0, 0.2);
 }
 
+.filter_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 40px;
+}
+
 .filter_box img {
     width: 250px;
     height: 400px;
@@ -67,6 +76,7 @@ ion-icon {
 }
 
 /* Plot */
+
 
 /* info */
 .info_container {

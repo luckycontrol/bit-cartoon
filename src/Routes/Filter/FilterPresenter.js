@@ -3,6 +3,11 @@ import PlotPresenter from "./Plot/PlotPresenter";
 import "../../Style/Filter/FilterPresenter.css";
 
 const FilterPresenter = () => {
+  const [filterName, setFilterName] = useState([
+    "초속 5센티미터",
+    "5Centimater_crop_BGR",
+  ]);
+
   const filterNames = useMemo(
     () => [
       ["초속 5센티미터", "5Centimater_crop_BGR"],
@@ -14,11 +19,6 @@ const FilterPresenter = () => {
     ],
     []
   );
-
-  const [filterName, setFilterName] = useState([
-    "초속 5센티미터",
-    "5Centimater_crop_BGR",
-  ]);
 
   // FIXME: 필터 사용법 보는 버튼
   const _handleSetFilterInfo = useCallback((e) => {
@@ -38,7 +38,18 @@ const FilterPresenter = () => {
 
     const filter_btn = document.querySelector(".filter_select_list");
     filter_btn.classList.toggle("is-active");
-  }, [])
+  }, []);
+
+  // FIXME: 필터 선택
+  const _handleSelectFilter = useCallback((e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    setFilterName(e.target.value.split(","));
+
+    const filter_btn = document.querySelector(".filter_select_list");
+    filter_btn.classList.toggle("is-active");
+  }, []);
 
   return (
     <>
@@ -51,21 +62,29 @@ const FilterPresenter = () => {
           ></ion-icon>
         </div>
         <div>
-          <button className="filter_selected_btn" onClick={_handleClickFilterBtn}>{filterName[0]}</button>
+          <button
+            className="filter_selected_btn"
+            onClick={_handleClickFilterBtn}
+          >
+            {filterName[0]}
+          </button>
           <div className="filter_select_list">
-            {filterNames.map((filter) =>
-              filter[0] !== filterName[0] ? (
-                <button className="filters">{filter[0]}</button>
-              ) : (
-                <></>
-              )
+            {filterNames.map(
+              (filter) =>
+                filter[0] !== filterName[0] && (
+                  <button
+                    key={filter}
+                    value={filter}
+                    className="filters"
+                    onClick={_handleSelectFilter}
+                  >
+                    {filter[0]}
+                  </button>
+                )
             )}
           </div>
         </div>
-        {/* <div className="filter_box">
-          <img src={`poster/${filterName[1]}.jpg`} alt="포스터"></img>
-          <PlotPresenter csvFile={filterName[1]} />
-        </div> */}
+        <PlotPresenter csvFile={filterName[1]} />
       </div>
       {/* 필터 페이지란 무엇인가...? */}
       <div className="info_container">
