@@ -159,6 +159,7 @@
   }
 
   .filter_container button {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
+    font-weight: bold;
   }
 }
