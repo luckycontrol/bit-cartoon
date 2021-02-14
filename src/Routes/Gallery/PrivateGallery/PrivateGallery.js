@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "../../../Style/Gallery/PrivateGalleryStyle.css";
-import { galleryApi }         from "../../../api";
-import PrivateImageComponent  from "./PrivateImageComponent";
-import DetailImageComponent   from "../DetailImageComponent";
+import { galleryApi } from "../../../api";
+import PrivateImageComponent from "./PrivateImageComponent";
+import DetailImageComponent from "../DetailImageComponent";
 import Loading from "../../../Components/Loading";
 
 const PrivateGallery = ({ sort }) => {
@@ -171,7 +171,7 @@ const PrivateGallery = ({ sort }) => {
   }, []);
 
   return loading ? (
-    <Loading text={"이미지를 불러오는중..."} usage={"load"}/>
+    <Loading text={"이미지를 불러오는중..."} usage={"load"} />
   ) : (
     <div className="private_gallery_box">
       {sort === "필터별" ? (
@@ -209,6 +209,9 @@ const PrivateGallery = ({ sort }) => {
                   _handleSelectDetailImage={_handleSelectDetailImage}
                   _handleCancelDetailImage={_handleCancelDetailImage}
                   _handleDownloadImage={_handleDownloadImage}
+                  _handleMovePublicImage={_handleMovePublicImage}
+                  _handleMovePrivateImage={_handleMovePrivateImage}
+                  _handleDeleteImage={_handleDeleteImage}
                 />
               ))}
             </div>

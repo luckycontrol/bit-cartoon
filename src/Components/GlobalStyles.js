@@ -7,7 +7,6 @@ const globalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Binggrae;
     }
 
     @font-face {
@@ -26,6 +25,7 @@ const globalStyle = createGlobalStyle`
         background-color: #222831;
         width: 100%;
         min-height: 100%;
+        font-family: 'Roboto', sans-serif;
     }
 `;
 

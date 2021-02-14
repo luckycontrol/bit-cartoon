@@ -18,7 +18,6 @@ const PrivateImageComponent = ({
         onClick={(e) => _handleSelectDetailImage(e, privateImage)}
       >
         <img src={imageURL} alt="개인이미지"></img>
-        <div className="private_image_overlay"></div>
         <div className="private_image_desc">
           <p>사용된 필터 : {filter}</p>
           <p>추천 수 : {like}</p>
@@ -49,6 +48,7 @@ const PrivateImageComponent = ({
             onClick={(e) => _handleDownloadImage(e, imageId, imageURL)}
           ></ion-icon>
         </div>
+        <div className="private_image_overlay"></div>
       </div>
     </>
   );

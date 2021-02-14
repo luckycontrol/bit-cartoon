@@ -16,6 +16,7 @@
   opacity: 0;
   padding: 5px;
   transition: 0.3s;
+  z-index: 10;
 }
 
 .private_image_desc p {
@@ -33,6 +34,7 @@
   padding: 5px;
   opacity: 0;
   transition: 0.3s;
+  z-index: 10;
 }
 
 ion-icon {

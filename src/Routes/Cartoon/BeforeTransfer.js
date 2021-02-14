@@ -21,13 +21,17 @@ const BeforeTransfer = ({
   return (
     <>
       <div className="input_container">
-        <div className="filter_box">
+        <div className="filters">
           {filters.map((filter) => (
             <div id={filter} key={filter} className="filter">
-              <button name={filter} onClick={(e) => _handleSelectFilter(e, filter)}>
+              <button
+                key
+                name={filter}
+                onClick={(e) => _handleSelectFilter(e, filter)}
+              >
                 {filter}
               </button>
-            </div>  
+            </div>
           ))}
         </div>
         <div className="input_box">
@@ -65,7 +69,9 @@ const BeforeTransfer = ({
           {filter !== "" ? (
             <p className="filter_paragraph">적용될 필터 : {filter}</p>
           ) : null}
-          <button className="translate_btn" onClick={_handleImageTransition}>이미지 변환</button>
+          <button className="translate_btn" onClick={_handleImageTransition}>
+            이미지 변환
+          </button>
         </div>
       </div>
     </>
