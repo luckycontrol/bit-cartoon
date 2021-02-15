@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import PlotPresenter from "./Plot/PlotPresenter";
 import "../../Style/Filter/FilterPresenter.css";
+import Helmet from "react-helmet";
 
 const FilterPresenter = () => {
   const [filterName, setFilterName] = useState([
@@ -53,6 +54,9 @@ const FilterPresenter = () => {
 
   return (
     <>
+      <Helmet>
+        <title>ARTWORKER | 필터</title>
+      </Helmet>
       <div className="filter_container">
         <div className="filter_page_info">
           <ion-icon

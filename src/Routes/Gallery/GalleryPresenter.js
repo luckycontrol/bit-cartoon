@@ -2,6 +2,7 @@ import React from "react";
 import "../../Style/Gallery/Gallery.css";
 import PublicGallery from "./PublicGallery/PublicGallery";
 import PrivateGallery from "./PrivateGallery/PrivateGallery";
+import Helmet from "react-helmet";
 
 const Gallery = ({
   title,
@@ -13,6 +14,9 @@ const Gallery = ({
 }) => {
   return (
     <>
+      <Helmet>
+        <title>ARTWORKER | 갤러리</title>
+      </Helmet>
       <div className="gallery_container">
         <p className="gallery_title">{title}</p>
         <div className="gallery_category">
