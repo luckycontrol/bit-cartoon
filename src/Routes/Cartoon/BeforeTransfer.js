@@ -25,7 +25,7 @@ const BeforeTransfer = ({
           {filters.map((filter) => (
             <div id={filter} key={filter} className="filter">
               <button
-                key
+                key={filter}
                 name={filter}
                 onClick={(e) => _handleSelectFilter(e, filter)}
               >
